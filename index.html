@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>(UN) Competitive Futsal</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: rgb(21, 38, 53); /* sfondo blu scuro */
+      color: white;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: white;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: black;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px 10px;
+      position: relative;
+    }
+
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: black; /* sottolineatura nera */
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 55vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .hero img.background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-family: 'Anybody', sans-serif;
+      font-size: 70px;
+      margin: 0;
+      padding: 10px 20px;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .hero-content img.logo {
+      margin-top: 20px;
+      margin-bottom: 40px;
+      width: 200px; /* logo più grande */
+      height: auto;
+    }
+
+    /* Descrizione */
+    .description {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* Bottoni */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .buttons a {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .faq-section h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-family: 'Anybody', sans-serif;
+      text-align: center;
+    }
+
+    .faq {
+      margin-bottom: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      outline: none;
+      padding: 15px;
+      text-align: left;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 20px;
+      font-size: 20px;
+    }
+
+    .faq-question.active::after {
+      content: '-';
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 15px;
+    }
+
+    .faq-answer p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    /* News Section */
+    .news-section {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .news-section h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-family: 'Anybody', sans-serif;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .news-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .news-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .news-card h3 {
+      font-size: 20px;
+      margin: 10px;
+    }
+
+    .news-card p {
+      font-size: 14px;
+      margin: 10px;
+      color: #ddd;
+    }
+
+    /* Footer */
+    footer {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .footer-socials img {
+      filter: none; /* icone normali, restano nere */
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="campionato.html">Campionato</a>
+    <a href="summer.html">Summer League</a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <img src="https://i.imgur.com/TZIxm9t.jpeg" alt="Banner" class="background">
+    <div class="hero-content">
+      <h1>(UN) COMPETITIVE FUTSAL</h1>
+      <img src="https://i.imgur.com/dRgOuEn.png" alt="Logo" class="logo">
+    </div>
+  </header>
+
+  <!-- Descrizione -->
+  <section class="description">
+    <p>
+      <b>UN Competitive Futsal (CFL)</b> è una lega italiana di <b>Haxball Futsal</b> pensata per unire la community e portare il gioco a un livello competitivo accessibile a tutti.<br><br>
+      Il progetto nasce con un duplice obiettivo: offrire un campionato organizzato e stimolante per i giocatori più costanti, e allo stesso tempo mantenere attive le room pubbliche, dove chiunque può entrare, divertirsi e migliorare.
+    </p>
+
+    <!-- Bottoni -->
+    <div class="buttons">
+      <!-- Bottone Haxball -->
+      <a href="https://www.haxball.com/play?c=4_PY4zZ6Oms" target="_blank" rel="noopener noreferrer" style="background-image: repeating-linear-gradient(135deg, #919b7d, #919b7d 20px, #7f886d 20px, #7f886d 40px);">
+        <img src="https://www.saganetwork.net/en/assets/images/game-pricing/haxball/haxball.webp" alt="Haxball" width="24" height="24" style="margin-right: 10px;" />
+        Gioca Ora - Room 1
+      </a>
+
+<!-- Bottone Haxball -->
+      <a href="https://www.haxball.com/play?c=Oz2239_TtNk" target="_blank" rel="noopener noreferrer" style="background-image: repeating-linear-gradient(135deg, #919b7d, #919b7d 20px, #7f886d 20px, #7f886d 40px);">
+        <img src="https://www.saganetwork.net/en/assets/images/game-pricing/haxball/haxball.webp" alt="Haxball" width="24" height="24" style="margin-right: 10px;" />
+        Gioca Ora - Room 2
+      </a>
+
+      <!-- Bottone Discord -->
+      <a href="https://discord.com/invite/My6XSb4tS3" target="_blank" rel="noopener noreferrer" style="background-color: #5865F2;">
+        <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/discord.svg" alt="Logo Discord" width="24" height="24" style="margin-right: 10px;" />
+        Unisciti al nostro Discord
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <h2>DOMANDE FREQUENTI</h2>
+
+    <div class="faq">
+      <button class="faq-question">Come posso giocare al campionato?</button>
+      <div class="faq-answer">
+        <p>Accedendo al nostro Discord, troverai tutte le informazioni che ti servono e potrai contattare i vari admin/mod.</p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="faq-question">Devo avere un team per partecipare?</button>
+      <div class="faq-answer">
+        <p>No, se non hai un team puoi comunque iscriverti: ti aiuteremo a trovare compagni o a unirti a una squadra esistente.</p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="faq-question">Posso giocare anche se sono alle prime armi?</button>
+      <div class="faq-answer">
+        <p>Certo! La nostra community accoglie sia giocatori esperti che principianti: puoi iniziare nelle room pubbliche per fare pratica.</p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="faq-question">Ci sono premi per i vincitori?</button>
+      <div class="faq-answer">
+        <p>Sì, nelle edizioni ufficiali del campionato e nelle leghe stagionali sono previsti premi in denaro e riconoscimenti speciali.</p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="faq-question">Dove trovo il regolamento?</button>
+      <div class="faq-answer">
+        <p>Il regolamento completo è disponibile sul nostro Discord, nella sezione dedicata al campionato.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section class="news-section">
+    <h2>LE ULTIME NEWS</h2>
+    <div class="news-grid">
+      <div class="news-card">
+        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=305x10000:format=png/path/sba115084f0f05fbc/image/ic6d67da4504dfb6e/version/1754610330/image.png" alt="News 1">
+        <h3>ROOM PUBBLICA Season 7</h3>
+        <p>La SEASON 7 della room pubblica è iniziata, cosa stai aspettando? Vieni a giocare in room!</p>
+      </div>
+      <div class="news-card">
+        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=305x10000:format=png/path/sba115084f0f05fbc/image/i4cbbf9582b6803cb/version/1754659572/image.png" alt="News 2">
+        <h3>Season 4 CFL Coming...</h3>
+        <p>Manca sempre meno alla quarta edizione del campionato, tutte le news a breve, settembre è sempre più vicino.</p>
+      </div>
+      <div class="news-card">
+        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=305x10000:format=png/path/sba115084f0f05fbc/image/iaba973347a48bfcc/version/1754610339/image.png" alt="News 3">
+        <h3>SUMMER LEAGUE</h3>
+        <p>La summer league è finita e ha visto vincitori il team più forte ai nastri di partenza "PIPPO SOWLO'S CLUB" che ha portato a casa il montepremio di 100 euro.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-socials">
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/uncompetitivefutsal" target="_blank">
+        <img src="https://img.icons8.com/?size=100&id=M486asakOqWV&format=png&color=000000" width="30" height="30" alt="Instagram">
+      </a>
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@uncompetitivefutsal" target="_blank">
+        <img src="https://img.icons8.com/?size=100&id=11xHwSW974uy&format=png&color=000000" width="30" height="30" alt="TikTok">
+      </a>
+      <!-- Twitch -->
+      <a href="https://www.twitch.tv/uncompetitivefutsal" target="_blank">
+        <img src="https://img.icons8.com/?size=100&id=18104&format=png&color=000000" width="28" height="28" alt="Twitch">
+      </a>
+    </div>
+    <p>Copyright © 2022 UN COMPETITIVE FUTSAL</p>
+  </footer>
+
+  <!-- Script FAQ -->
+  <script>
+    const faqButtons = document.querySelectorAll(".faq-question");
+
+    faqButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        button.classList.toggle("active");
+        const answer = button.nextElementSibling;
+
+        if (button.classList.contains("active")) {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        } else {
+          answer.style.maxHeight = null;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
