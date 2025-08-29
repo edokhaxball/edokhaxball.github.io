@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Summer League CFL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #152635;
+      color: white;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: white;
+      padding: 10px 0;
+    }
+    nav a {
+      color: black;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px 10px;
+      position: relative;
+    }
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: black;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 30vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    .hero img.background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content h1 {
+      font-family: 'Anybody', sans-serif;
+      font-size: 50px;
+      margin: 0;
+      padding: 10px 20px;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    }
+    .hero-content p {
+      margin: 5px 0 0 0;
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* Layout blocchi */
+    .blocks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .block {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 20px;
+      min-height: 300px;
+      overflow-x: auto;
+    }
+    .block h2 {
+      font-family: 'Anybody', sans-serif;
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    /* Tabelle classifica */
+    .classifica-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      font-size: 16px;
+    }
+    .classifica-table th, .classifica-table td {
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    .classifica-table th {
+      background-color: rgba(255,255,255,0.15);
+      font-weight: bold;
+      text-align: center;
+    }
+    .classifica-table tr:nth-child(even) {
+      background-color: rgba(255,255,255,0.05);
+    }
+    .classifica-table img {
+      vertical-align: middle;
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+    }
+    .gold {
+      color: #FFD700;
+      font-weight: bold;
+    }
+
+    /* Playoffs */
+    .playoffs {
+      margin-top: 30px;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .playoffs h2 {
+      color: #FFD700;
+    }
+    .playoffs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .playoffs-table td {
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .playoffs-table .team {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Footer */
+    footer {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .footer-socials img {
+      filter: none;
+    }
+    footer p {
+      margin: 0;
+      font-size: 14px;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="campionato.html">Campionato</a>
+    <a href="summer.html" class="active">Summer League</a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <img src="https://i.imgur.com/TZIxm9t.jpeg" alt="Banner" class="background">
+    <div class="hero-content">
+      <h1>SUMMER LEAGUE</h1>
+      <p>Lega senza coin, con un premio in palio e dedicata esclusivamente ai player italiani</p>
+      <p>Edizione 1</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Blocchi classifica gironi -->
+    <div class="blocks">
+      <div class="block">
+        <h2>Girone A</h2>
+        <table class="classifica-table">
+          <tbody>
+            <tr class="gold"><td><img src="https://i.imgur.com/8M9M96R.png">I Giurassici</td><td>18</td></tr>
+            <tr class="gold"><td><img src="https://i.imgur.com/zClkOTV.png">Gladiators</td><td>12</td></tr>
+            <tr><td><img src="https://i.imgur.com/n5jccAH.png">Bulls</td><td>9</td></tr>
+            <tr><td><img src="https://i.imgur.com/PfzM40A.png">Aviatori</td><td>9</td></tr>
+            <tr><td><img src="https://i.imgur.com/QKgxppW.png">Crociati Mbalusi</td><td>9</td></tr>
+            <tr><td><img src="https://i.imgur.com/e5sORjJ.png">Scappati di Ping</td><td>6</td></tr>
+            <tr><td><img src="https://i.imgur.com/uUHRqse.png">Tropical Mood</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="block">
+        <h2>Girone B</h2>
+        <table class="classifica-table">
+          <tbody>
+            <tr class="gold"><td><img src="https://i.imgur.com/yBC0uyu.png">Pippo Sowlo Fan Club</td><td>15</td></tr>
+            <tr class="gold"><td><img src="https://i.imgur.com/63xNrq0.png">South Coast</td><td>15</td></tr>
+            <tr><td><img src="https://i.imgur.com/GZSwAOn.png">Vesuvio Academy</td><td>12</td></tr>
+            <tr><td><img src="https://i.imgur.com/IPgKi2x.png">Pensionati</td><td>9</td></tr>
+            <tr><td><img src="https://i.imgur.com/Lw4JFGm.png">Haxlock All Stars</td><td>6</td></tr>
+            <tr><td><img src="https://i.imgur.com/WGNCCSN.png">Ezzatori</td><td>6</td></tr>
+            <tr><td><img src="https://i.imgur.com/cCN34sl.jpeg">Mattilans Ht</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Playoffs -->
+<div class="block playoffs">
+  <h2>Playoffs Gold</h2>
+  <table class="playoffs-table">
+    <tbody>
+      <tr>
+        <td class="team"><img src="https://i.imgur.com/8M9M96R.png" style="width:24px; height:24px;">Giurassici</td>
+        <td>1-2</td>
+        <td class="team"><img src="https://i.imgur.com/63xNrq0.png" style="width:24px; height:24px;">South Coast</td>
+      </tr>
+      <tr>
+        <td class="team"><img src="https://i.imgur.com/zClkOTV.png" style="width:24px; height:24px;">Gladiators</td>
+        <td>0-2</td>
+        <td class="team"><img src="https://i.imgur.com/yBC0uyu.png" style="width:24px; height:24px;">Pippo Sowlo Fan Club</td>
+      </tr>
+      <tr><td colspan="3" style="text-align:center; font-weight:bold;">Final Gold</td></tr>
+      <tr>
+        <td class="team"><img src="https://i.imgur.com/yBC0uyu.png" style="width:24px; height:24px;">Pippo Sowlo Fan Club</td>
+        <td>2-0</td>
+        <td class="team"><img src="https://i.imgur.com/63xNrq0.png" style="width:24px; height:24px;">South Coast</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/uncompetitivefutsal" target="_blank">
+        <img src="https://img.icons8.com/?size=100&id=M486asakOqWV&format=png&color=000000" width="30" height="30" alt="Instagram">
+      </a>
+      <a href="https://www.tiktok.com/@uncompetitivefutsal" target="_blank">
+        <img src="https://img.icons8.com/?size=100&id=11xHwSW974uy&format=png&color=000000" width="30" height="30" alt="TikTok">
+      </a>
+      <a href="https://www.twitch.tv/uncompetitivefutsal" target="_blank">
+        <img src="https://img.icons8.com/?size=100&id=18104&format=png&color=000000" width="28" height="28" alt="Twitch">
+      </a>
+    </div>
+    <p>Copyright © 2022 UN COMPETITIVE FUTSAL</p>
+  </footer>
+</body>
+</html>
