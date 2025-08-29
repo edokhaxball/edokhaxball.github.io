@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Campionato CFL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #152635;
+      color: white;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: white;
+      padding: 10px 0;
+    }
+    nav a {
+      color: black;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px 10px;
+      position: relative;
+    }
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: black;
+    }
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 30vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    .hero img.background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content h1 {
+      font-family: 'Anybody', sans-serif;
+      font-size: 60px;
+      margin: 0;
+      padding: 10px 20px;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    }
+    .container {
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .season-select {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .season-select label {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    .season-select select {
+      padding: 8px 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    .blocks {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .block {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 20px;
+      min-height: 400px;
+      overflow-x: auto;
+    }
+    .block h2 {
+      font-family: 'Anybody', sans-serif;
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .classifica-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+      font-size: 16px;
+    }
+    .classifica-table th, .classifica-table td {
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 10px;
+      text-align: center;
+    }
+    .classifica-table th {
+      background-color: rgba(255,255,255,0.15);
+      font-weight: bold;
+    }
+    .classifica-table tr:nth-child(even) {
+      background-color: rgba(255,255,255,0.05);
+    }
+    .classifica-table img {
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .playoffs-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 16px;
+    }
+    .playoffs-table td {
+      padding: 10px;
+      vertical-align: middle;
+    }
+    .team-cell {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .team-cell img {
+      width: 25px;
+      height: 25px;
+      object-fit: contain;
+    }
+    footer {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .footer-socials img {
+      filter: none;
+    }
+    footer p {
+      margin: 0;
+      font-size: 14px;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="campionato.html" class="active">Campionato</a>
+  <a href="summer.html">Summer League</a>
+</nav>
+<header class="hero">
+  <img src="https://i.imgur.com/TZIxm9t.jpeg" alt="Banner" class="background">
+  <div class="hero-content">
+    <h1>CAMPIONATO CFL</h1>
+  </div>
+</header>
+<div class="container">
+  <div class="season-select">
+    <label for="season">Seleziona season:</label>
+    <select id="season" onchange="changeSeason()">
+      <option value="s1">Season 1</option>
+      <option value="s2">Season 2</option>
+      <option value="s3" selected>Season 3</option>
+      <option value="s4">Season 4</option>
+    </select>
+  </div>
+  <div class="blocks">
+    <div class="block" id="classifica">
+      <h2>Classifica</h2>
+      <div id="classifica-content"></div>
+    </div>
+    <div class="block" id="playoffs">
+      <h2>Playoffs / Matchday</h2>
+      <div id="playoffs-content"></div>
+    </div>
+    <div class="block" id="stats">
+      <h2>Statistiche</h2>
+      <div id="stats-content"></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-socials">
+    <a href="https://www.instagram.com/uncompetitivefutsal" target="_blank">
+      <img src="https://img.icons8.com/?size=100&id=M486asakOqWV&format=png&color=000000" width="30" height="30" alt="Instagram">
+    </a>
+    <a href="https://www.tiktok.com/@uncompetitivefutsal" target="_blank">
+      <img src="https://img.icons8.com/?size=100&id=11xHwSW974uy&format=png&color=000000" width="30" height="30" alt="TikTok">
+    </a>
+    <a href="https://www.twitch.tv/uncompetitivefutsal" target="_blank">
+      <img src="https://img.icons8.com/?size=100&id=18104&format=png&color=000000" width="28" height="28" alt="Twitch">
+    </a>
+  </div>
+  <p>Copyright © 2022 UN COMPETITIVE FUTSAL</p>
+</footer>
+<script>
+// Abbreviazioni per nomi lunghi
+const abbreviations = {
+  "The Anbeliveball Turkishs": "Turkishs",
+  "Gli Occhi Del Cuore": "Occhi Cuore",
+  "Haxlock All Star": "Haxlock",
+  "HaxLock All Stars": "HaxLock",
+  "Leicesser City": "Leicesser",
+  "PastaMakers69": "PastaMakers"
+};
+
+// Dati delle season
+const data = {
+  s1: {
+    classifica: [
+      {name:"QS Assurdi", logo:"https://i.imgur.com/upfuYmu.png", punti:27},
+      {name:"La Bocciofila", logo:"https://i.imgur.com/DaP0f5r.png", punti:25},
+      {name:"The Anbeliveball Turkishs", logo:"https://i.imgur.com/PfzM40A.png", punti:25},
+      {name:"I Trapezi", logo:"https://i.imgur.com/nvPHVwL.png", punti:24},
+      {name:"Potatoes FC", logo:"https://i.imgur.com/XqTDZL7.png", punti:21},
+      {name:"ADB", logo:"https://i.imgur.com/ImCBr0f.png", punti:16},
+      {name:"Haxlock All Star", logo:"https://i.imgur.com/WRZAZTJ.png", punti:13},
+      {name:"PastaMakers69", logo:"https://i.imgur.com/JzDMrzU.png", punti:13},
+      {name:"The Hive", logo:"https://i.imgur.com/6hSVBag.png", punti:10},
+      {name:"Atlamp", logo:"https://i.imgur.com/uwj2la3.png", punti:7},
+      {name:"Team Rocket", logo:"https://i.imgur.com/wfJTAEr.png", punti:7},
+      {name:"HaxPostoli FC", logo:"https://i.imgur.com/kX6GQQu.png", punti:3}
+    ],
+    playoffs: [
+      ["Quarter Finals", [
+        {team1:"The Anbeliveball Turkishs", team2:"ADB", score:"1-2"},
+        {team1:"I Trapezi", team2:"Potatoes FC", score:"0-2"}
+      ]],
+      ["Semi Finals", [
+        {team1:"QS Assurdi", team2:"Potatoes FC", score:"2-1"},
+        {team1:"La Bocciofila", team2:"ADB", score:"2-0"}
+      ]],
+      ["Final", [
+        {team1:"QS Assurdi", team2:"La Bocciofila", score:"2-0"}
+      ]]
+    ]
+  },
+  s2: {
+    classifica: [
+      {name:"Bastard Munchen", logo:"https://i.imgur.com/LRNWF0i.png", punti:26},
+      {name:"HaxLock All Stars", logo:"https://i.imgur.com/WRZAZTJ.png", punti:23},
+      {name:"QS Assurdi", logo:"https://i.imgur.com/upfuYmu.png", punti:22},
+      {name:"Jyoyo Orange Hill", logo:"https://i.imgur.com/bEcm84Z.png", punti:19},
+      {name:"The Anbeliveball Turkishs", logo:"https://i.imgur.com/PfzM40A.png", punti:18},
+      {name:"Beyond The Walls", logo:"https://i.imgur.com/3VZb1RC.png", punti:18},
+      {name:"Atlamp", logo:"https://i.imgur.com/uwj2la3.png", punti:18},
+      {name:"Angry Bees", logo:"https://i.imgur.com/GQBEMyN.png", punti:14},
+      {name:"Neo Save Us", logo:"https://i.imgur.com/c9E1Nl4.png", punti:12},
+      {name:"Dada Juniors", logo:"https://i.imgur.com/JYeM8ib.png", punti:12},
+      {name:"Potatoes FC", logo:"https://i.imgur.com/XqTDZL7.png", punti:6},
+      {name:"Bari Futuro", logo:"https://i.imgur.com/YkQmGmD.png", punti:4}
+    ],
+    playoffs: [
+      ["Quarter Finals", [
+        {team1:"QS Assurdi", team2:"Beyond The Walls", score:"0-2"},
+        {team1:"Jyoyo Orange Hill", team2:"The Anbeliveball Turkishs", score:"2-0"}
+      ]],
+      ["Semi Finals", [
+        {team1:"Bastard Munchen", team2:"Jyoyo Orange Hill", score:"2-1"},
+        {team1:"HaxLock All Stars", team2:"Beyond The Walls", score:"2-0"}
+      ]],
+      ["Final", [
+        {team1:"Bastard Munchen", team2:"HaxLock All Stars", score:"0-2"}
+      ]]
+    ]
+  },
+  s3: {
+    classifica: [
+      {name:"HC Vesuvio", logo:"https://i.imgur.com/sGeypK3.png", punti:30},
+      {name:"Radiants", logo:"https://i.imgur.com/G3OgwSg.png", punti:26},
+      {name:"Cacacats", logo:"https://i.imgur.com/tYNw1F0.png", punti:23},
+      {name:"HaxLock All Stars", logo:"https://i.imgur.com/uw5tn0B.png", punti:23},
+      {name:"Las Divinas", logo:"https://i.imgur.com/I7Ne4BU.png", punti:23},
+      {name:"QS Assurdi", logo:"https://i.imgur.com/bGXgcd4.png", punti:23},
+      {name:"Turkishs Airlines", logo:"https://i.imgur.com/PfzM40A.png", punti:22},
+      {name:"Dada", logo:"https://i.imgur.com/dsoCfOy.png", punti:21},
+      {name:"Bastard Munchen", logo:"https://i.imgur.com/LRNWF0i.png", punti:20},
+      {name:"Gli Occhi Del Cuore", logo:"https://i.imgur.com/FNejRMM.png", punti:19},
+      {name:"Scimmiette Arrabbiate", logo:"https://i.imgur.com/ld9pRNX.png", punti:13},
+      {name:"Leicesser City", logo:"https://i.imgur.com/G2oo9SM.png", punti:9},
+      {name:"Atlamp", logo:"https://i.imgur.com/uwj2la3.png", punti:7},
+      {name:"Night Racers", logo:"https://i.imgur.com/8QL4O5k.png", punti:0}
+    ],
+    playoffs: [
+      ["Play-in", [
+        {team1:"QS Assurdi", team2:"Turkishs Airlines", score:"2-0"},
+        {team1:"Dada", team2:"Las Divinas", score:"2-0"}
+      ]],
+      ["Quarter Finals", [
+        {team1:"Cacacats", team2:"QS Assurdi", score:"0-2"},
+        {team1:"HaxLock All Stars", team2:"Dada", score:"2-0"}
+      ]],
+      ["Semi Finals", [
+        {team1:"Radiants", team2:"QS Assurdi", score:"1-2"},
+        {team1:"HC Vesuvio", team2:"HaxLock All Stars", score:"2-1"}
+      ]],
+      ["Final", [
+        {team1:"QS Assurdi", team2:"HC Vesuvio", score:"0-2"}
+      ]]
+    ]
+  },
+  s4: {
+    classifica: [
+      {name:"Squadra A", logo:"https://i.imgur.com/SZUOsNZ.png", punti:0},
+      {name:"Squadra B", logo:"https://i.imgur.com/SZUOsNZ.png", punti:0},
+      {name:"Squadra C", logo:"https://i.imgur.com/SZUOsNZ.png", punti:0},
+      {name:"Squadra D", logo:"https://i.imgur.com/SZUOsNZ.png", punti:0}
+    ],
+    matchdays: [
+      {name:"Matchday 1", matches:[
+        {team1:"Squadra A", team2:"Squadra B", score:"-"},
+        {team1:"Squadra C", team2:"Squadra D", score:"-"}
+      ]},
+      {name:"Matchday 2", matches:[
+        {team1:"Squadra A", team2:"Squadra C", score:"-"},
+        {team1:"Squadra B", team2:"Squadra D", score:"-"}
+      ]},
+      {name:"Matchday 3", matches:[
+        {team1:"Squadra D", team2:"Squadra A", score:"-"},
+        {team1:"Squadra B", team2:"Squadra C", score:"-"}
+      ]}
+    ]
+  }
+};
+
+let currentSeason = "s3"; 
+let currentMatchday = 0;
+
+// Abbrevia nomi lunghi
+function shortName(name){ return abbreviations[name] || name; }
+
+// Render classifica
+function renderClassifica(season){
+  return `
+    <table class="classifica-table">
+      <thead>
+        <tr><th>#</th><th>Squadra</th><th>Punti</th></tr>
+      </thead>
+      <tbody>
+        ${data[season].classifica.map((team,i)=>`
+          <tr>
+            <td>${i+1}</td>
+            <td class="team-cell"><img src="${team.logo}" alt="${team.name}">${shortName(team.name)}</td>
+            <td>${team.punti}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+// Render playoff S1-S3
+function renderPlayoffs(season){
+  return data[season].playoffs.map(round => `
+    <h3 style="text-align:center; margin-bottom:10px;">${round[0]}</h3>
+    <div style="display:flex; flex-direction:column; gap:5px;">
+      ${round[1].map(match => {
+        const team1 = data[season].classifica.find(t => t.name===match.team1);
+        const team2 = data[season].classifica.find(t => t.name===match.team2);
+        const [score1,score2] = match.score.split("-").map(Number);
+        const winner1 = score1>score2;
+        const winner2 = score2>score1;
+        return `
+          <div style="display:grid; grid-template-columns:1fr 60px 1fr; background: rgba(255,255,255,0.05); border-radius:10px; padding:8px; align-items:center;">
+            <div style="display:flex; align-items:center; font-weight:${winner1?'bold':'normal'}; color:${winner1?'#8BC34A':'white'}">
+              <img src="${team1.logo}" style="width:24px; margin-right:6px;">${shortName(team1.name)}
+            </div>
+            <div style="text-align:center; font-weight:bold;">${match.score}</div>
+            <div style="display:flex; justify-content:flex-end; align-items:center; font-weight:${winner2?'bold':'normal'}; color:${winner2?'#8BC34A':'white'}">
+              ${shortName(team2.name)}<img src="${team2.logo}" style="width:24px; margin-left:6px;">
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `).join("");
+}
+
+// Render matchday S4
+function renderMatchday(season,index){
+  const md = data[season].matchdays[index];
+  return `
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <button onclick="prevMatchday()">⬅</button>
+      <h3>${md.name}</h3>
+      <button onclick="nextMatchday()">➡</button>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      ${md.matches.map(match => {
+        const team1 = data[season].classifica.find(t => t.name===match.team1);
+        const team2 = data[season].classifica.find(t => t.name===match.team2);
+        return `
+          <div style="display:grid; grid-template-columns:1fr 60px 1fr; background: rgba(255,255,255,0.05); border-radius:10px; padding:8px; align-items:center;">
+            <div style="display:flex; align-items:center;">
+              <img src="${team1.logo}" style="width:24px; margin-right:6px;">${team1.name}
+            </div>
+            <div style="text-align:center; font-weight:bold;">${match.score}</div>
+            <div style="display:flex; justify-content:flex-end; align-items:center;">
+              ${team2.name}<img src="${team2.logo}" style="width:24px; margin-left:6px;">
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function nextMatchday(){
+  if(currentSeason==="s4" && currentMatchday < data.s4.matchdays.length-1){
+    currentMatchday++;
+    changeSeason();
+  }
+}
+
+function prevMatchday(){
+  if(currentSeason==="s4" && currentMatchday > 0){
+    currentMatchday--;
+    changeSeason();
+  }
+}
+
+// Cambia stagione
+function changeSeason(){
+  currentSeason = document.getElementById("season").value;
+  document.getElementById("classifica-content").innerHTML = renderClassifica(currentSeason);
+  
+  if(currentSeason==="s4"){
+    document.getElementById("playoffs-content").innerHTML = renderMatchday("s4", currentMatchday);
+  } else {
+    document.getElementById("playoffs-content").innerHTML = renderPlayoffs(currentSeason);
+  }
+
+  document.getElementById("stats-content").innerHTML = "<p>In arrivo...</p>";
+}
+
+// Inizializzazione
+window.onload = () => changeSeason();
+</script>
+</body>
+</html>
